@@ -1,8 +1,33 @@
 # -python-django-web-
 基于Python和Djanjo实现运维web化
-
+---------------------------------
+准备环境：
+centos 7版本
+mysql liunx centos 7版本
+pip 版本确保在35以上
+mysql:
+create database ansible;
+如果数据库密码不一样请去ansi_cfg 下dhosts.py下修改engine引擎中root:后面密码
+Ansible:
+yum install -y epel-release
+yum install ansible
+ansible all -m setup --tree /tmp/myservers/
+vim /etc/ansible/hosts:在这里修改主机名和密码实现免密登录
+danjo：
+python manage.py createsuperuser
+接着输入用户名和密码
+python 虚拟环境下
+[root@lcoalhost danjo]# python manage.py makemigrations
+[root@lcoalhost danjo]# python manage.py migrate
+[root@lcoalhost danjo]# python manage.py shell
+bootstrap 详细语法见官网：https"//v3.www.bootcss.com/
+--------------------------
+运行：
+python manage.py runserver 0:80
 原理：当客户端用户访问URL服务器时，URL服务器会调用视图函数，
 视图函数views会通过用户请求返回template前端页面文件。同时也会通过crud调用数据库模型models。
+----------------------------------------
+项目介绍：
 
 dhosts.py文件：这其实就是一个主机清单生成文件，通过调用SQLAchemy调用数据库，这里需要你创建数据库引擎来调用数据库，创建数据库引擎需要你的数据库类型，用户，密码和数据库的库名。然后创建会话生成器，用于数据库的交互，然后创建一个基类，声明模型。创建模型类：主机和主机组：通过__tablename__指定需要调用的表名，定义主机字段等需要调用的。最后在调用时将结果转为JSON格式
 Plan.sh:自动化脚本文件，通过crontab实现自动化更新主机清单内容，我这里是每天更新一次
