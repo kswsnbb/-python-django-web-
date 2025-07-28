@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+{% extends 'basic.html' %}  <!-- 继承自basic.html基础模板 -->
+{% load static %}  <!-- 加载静态文件标签库 -->
+{% block title %} Ansible Webadmin {% endblock %}  <!-- 设置页面标题 -->
+{% block content %}
+<!-- 功能导航区 -->
+<div class="roll" xmlns="http://www.w3.org/1999/html">
+    <!-- 主机信息功能入口 -->
+    <div class="col-sm-3 text-center">
+        <a href="{% url 'webadmin_index' %}" target="_blank">  <!-- 链接到webadmin_index视图，新窗口打开 -->
+            <img src="{% static 'imgs/com1.jpg'%}" width="150px"></br>  <!-- 功能图标 -->
+            主机信息  <!-- 功能名称 -->
+        </a>
+    </div>
+    <!-- 添加主机功能入口 -->
+    <div class="col-sm-3 text-center">
+        <a href="{% url 'add_hosts' %}" target="_blank">  <!-- 链接到add_hosts视图，新窗口打开 -->
+            <img src="{% static 'imgs/com1.jpg'%}" width="150px"></br>  <!-- 功能图标 -->
+            添加主机  <!-- 功能名称 -->
+        </a>
+    </div>
+    <!-- 添加模块功能入口 -->
+    <div class="col-sm-3 text-center">
+        <a href="{%url 'add_modules' %}" target="_blank">
+            <img src="{% static 'imgs/com1.jpg'%}" width="150px"></br>  <!-- 功能图标 -->
+            添加模块  <!-- 功能名称 -->
+        </a>
+    </div>
+    <!-- 执行任务功能入口 -->
+    <div class="col-sm-3 text-center">
+        <a href="{%url 'tasks'%}" target="_blank">
+            <img src="{% static 'imgs/com1.jpeg'%}" width="150px"></br>  <!-- 功能图标 -->
+            执行任务  <!-- 功能名称 -->
+        </a>
+    </div>
+</div>
+{% endblock %}

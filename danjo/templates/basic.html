@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"> <!-- 引入Google Fonts -->
+    <style>
+        body {
+            background-color: #f8f9fa; /* 背景颜色 */
+            font-family: 'Roboto', sans-serif; /* 使用自定义字体 */
+        }
+
+        /* 导航栏样式 */
+        .nav-pills {
+            justify-content: center; /* 居中导航项 */
+            background-color: #f8f9fa; /* 默认背景颜色 */
+            padding: 10px 0; /* 导航栏内边距 */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* 添加阴影 */
+        }
+
+        .nav-pills .nav-link {
+            font-size: 2.4rem; /* 字体大小调大3倍 */
+            margin: 0 30px; /* 各项之间的水平间距 */
+            transition: background-color 0.3s; /* 动画效果 */
+        }
+
+        .nav-pills .nav-link:hover {
+            background-color: rgba(0, 0, 0, 0.1); /* 悬停时背景颜色加深 */
+        }
+
+        .carousel {
+            margin: 20px 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .carousel-inner img {
+            width: 100%;
+            max-height: 400px; /* 设置最大高度 */
+            height: auto; /* 自适应高度 */
+            object-fit: cover;
+            border-radius: 10px; /* 添加圆角 */
+        }
+
+        .carousel-control {
+            background: rgba(0,0,0,0.5); /* 半透明背景 */
+        }
+
+        .carousel-control:hover {
+            background: rgba(0,0,0,0.7); /* 悬停时加深背景 */
+        }
+
+        .text-center {
+            margin-top: 30px;
+        }
+
+        footer {
+            background-color: #343a40; /* 页脚背景颜色 */
+            color: white;
+            padding: 20px 0; /* 页脚内边距 */
+        }
+
+        .social-media a {
+            color: white; /* 社交媒体链接颜色 */
+            margin-right: 10px; /* 间距 */
+        }
+
+        .feedback-form {
+            margin-top: 40px; /* 间距 */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 导航栏 -->
+    <ul class="nav nav-pills">
+        <li class="nav-item"><a class="nav-link active" href="{% url 'index' %}" >首页</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'webadmin_index' %}" >主机信息</a></li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="{% url 'add_hosts' %}" >添加主机 <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">主机组</a></li>
+                <li><a class="dropdown-item" href="#">主机</a></li>
+                <li><a class="dropdown-item" href="#">ip</a></li>
+
+            </ul>
+        </li>
+         <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="{%url 'add_modules' %}" >添加模块 <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">模块组</a></li>
+                <li><a class="dropdown-item" href="#">模块</a></li>
+
+            </ul>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="{%url 'tasks'%}" >执行任务 <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">主机组</a></li>
+                <li><a class="dropdown-item" href="#">主机</a></li>
+
+            </ul>
+        </li>
+    </ul>
+
+    <div class="container">
+        <!-- 轮播图组件 -->
+        <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="3000">
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="item active">
+                    <img src="{% static 'imgs/tec2.jpg' %}" alt="Image 1">
+                </div>
+                <div class="item">
+                    <img src="{% static 'imgs/tec4.jpg' %}" alt="Image 2">
+                </div>
+                <div class="item">
+                    <img src="{% static 'imgs/tec5.jpg' %}" alt="Image 3">
+                </div>
+            </div>
+            <a class="carousel-control left" href="#myCarousel" data-slide="prev">
+                <span class="icon-arrow-left"></span>
+            </a>
+            <a class="carousel-control right" href="#myCarousel" data-slide="next">
+                <span class="icon-arrow-right"></span>
+            </a>
+        </div>
+
+        {% block content %}{% endblock %}  <!-- 内容块，允许子模板填充 -->
+
+        <!-- 反馈表单 -->
+        <div class="feedback-form">
+            <h4>反馈</h4>
+            <form>
+                <div class="form-group">
+                    <label for="userEmail">邮箱地址</label>
+                    <input type="email" class="form-control" id="userEmail" placeholder="输入邮箱">
+                </div>
+                <div class="form-group">
+                    <label for="userMessage">留言</label>
+                    <textarea class="form-control" id="userMessage" rows="3" placeholder="输入您的留言"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">提交</button>
+            </form>
+        </div>
+
+        <!-- 页脚区域 -->
+        <footer class="text-center">
+            <hr>
+            <div class="social-media">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+            <h4>
+                1693986378@qq.com &copy; <a href="https://www.alibaba.com/" style="color: white;">alibaba</a>
+            </h4>
+        </footer>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script>
+        $('#myCarousel').carousel({
+            interval: 3000
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+{% extends 'basic.html' %}  <!-- 继承基本模板 basic.html -->
+{% load static %}  <!-- 加载静态文件库以便使用静态文件 -->
+{% block title %}tasks {% endblock %}  <!-- 定义页面标题块为 "tasks" -->
+
+{% block content %}  <!-- 定义内容块 -->
+    <ul class="nav nav-tabs h4">  <!-- 创建导航选项卡 -->
+        <li class="active"><a href="#" data-toggle="tab">主机组</a></li>  <!-- 第一个选项卡：主机组 -->
+        <li><a href="#" data-toggle="tab">主机</a></li>  <!-- 第二个选项卡：主机 -->
+    </ul>
+
+    <form action="" method="post" style="margin:10px 0">  <!-- 表单用于提交数据 -->
+        {% csrf_token %}  <!-- 防止跨站请求伪造的安全令牌 -->
+
+        <div class="tab-content">  <!-- 定义选项卡内容 -->
+            <div class="tab-pane active fade in" id="hostgroup">  <!-- 主机组选项卡内容 -->
+                <select class="form-control" name="group">  <!-- 下拉菜单选择主机组 -->
+                    <option value="">无</option>  <!-- 默认选项：无 -->
+                    {% for group in groups %}  <!-- 遍历传入的主机组 -->
+                        <option value="{{ group.groupname }}">{{ group.groupname }}</option>  <!-- 为每个主机组生成选项 -->
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="tab-pane fade" id="host">  <!-- 主机选项卡内容 -->
+                <select class="form-control" name="server">  <!-- 下拉菜单选择主机 -->
+                    <option value="">无</option>  <!-- 默认选项：无 -->
+                    {% for host in hosts %}  <!-- 遍历传入的主机 -->
+                        <option value="{{ host.ip_addr }}">{{ host.hostname }}:{{ host.ip_addr }}</option>  <!-- 为每个主机生成选项，显示主机名和 IP 地址 -->
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <table class="table table-bordered table-striped table-hover h4">  <!-- 表格显示模块和参数 -->
+            <thead class="bg-primary">  <!-- 表头，使用背景颜色 -->
+                <tr>
+                    <td>模块</td>  <!-- 模块列 -->
+                    <td>参数</td>  <!-- 参数列 -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for m in modules %}  <!-- 遍历传入的模块列表 -->
+                    <tr>
+                        <td>
+                            <div class="radio">  <!-- 单选按钮容器 -->
+                                <label>
+                                    <input type="radio" name="module" value="{{ m.modulename }}">  <!-- 模块选择的单选按钮 -->
+                                    {{ m.modulename }}  <!-- 模块名称 -->
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            {% for arg in m.argument_set.all %}  <!-- 遍历模块的所有参数 -->
+                                <div class="radio">  <!-- 单选按钮容器 -->
+                                    <label>
+                                        <input type="radio" name="param" value="{{ arg.arg_text }}">  <!-- 参数选择的单选按钮 -->
+                                        {{ arg.arg_text }}  <!-- 参数文本 -->
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="text-center">  <!-- 居中按钮 -->
+            <input class="btn btn-primary" type="submit" value="执 行">  <!-- 提交按钮 -->
+            <input class="btn btn-primary" type="reset" value="重 置">  <!-- 重置按钮 -->
+        </div>
+    </form>
+{% endblock %}

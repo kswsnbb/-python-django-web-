@@ -1,0 +1,48 @@
+{% extends 'basic.html' %}  <!-- 继承自basic.html基础模板 -->
+{% load static %}  <!-- 加载静态文件标签库 -->
+{% block title %} 添加主机 {% endblock %}  <!-- 设置页面标题 -->
+{% block content %}
+    <!-- 主机添加表单，使用POST方法提交数据 -->
+    <form action="" method="post" class="form-inline" style="margin-top: 20px">
+        {% csrf_token %}  <!-- Django CSRF保护令牌 -->
+        <div class="form-group">
+            <label>主机组</label>
+            <input class="form-group" type="text" name="group">  <!-- 输入主机组名称 -->
+        </div>
+        <div class="form-group">
+            <label>主机:</label>
+            <input class="form-control" type="text" name="host">  <!-- 输入主机名称 -->
+        </div>
+        <div class="form-group">
+            <label>Ip</label>
+            <input class="form-control" type="text" name="ip">  <!-- 输入IP地址 -->
+        </div>
+        <div class="form-group">
+            <input class="btn btn-primary" type="submit" value="提 交">  <!-- 提交按钮 -->
+        </div>
+    </form>
+    <hr>  <!-- 水平分隔线 -->
+    <!-- 主机组和主机信息展示表格 -->
+    <table class="table table-bordered table-striped table-hover h4">
+        <thead class="bg-primary">  <!-- 表格头部，使用蓝色背景 -->
+        <tr>
+            <td>主机组</td>
+            <td>主机</td>
+        </tr>
+        </thead>
+        <tbody>
+            <!-- 遍历所有主机组 -->
+            {% for group in groups %}
+                <tr>
+                    <td>{{ group.groupname }}</td>  <!-- 显示主机组名称 -->
+                    <td>
+                        <!-- 遍历当前主机组下的所有主机 -->
+                        {% for host in group.host_set.all %}
+                            <div>{{ host.hostname }}:{{ host.ip_addr }}</div>  <!-- 显示主机名和IP地址 -->
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
