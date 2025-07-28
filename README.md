@@ -5,6 +5,8 @@
 具体代码见master下danjo
 运行：
 python manage.py runserver 0:80
+
+
 原理：当客户端用户访问URL服务器时，URL服务器会调用视图函数，
 视图函数views会通过用户请求返回template前端页面文件。同时也会通过crud调用数据库模型models。
 
