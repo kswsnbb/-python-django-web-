@@ -1,6 +1,7 @@
 # -python-django-web-
 基于Python和Djanjo实现运维web化
 ---------------------------------
+具体代码见master下danjo
 准备环境：
 centos 7版本
 mysql liunx centos 7版本
